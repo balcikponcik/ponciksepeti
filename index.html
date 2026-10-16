@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ponçik Sepeti</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Jost:wght@300;400;500&display=swap">
+<style>
+/* Layout: a jeweler's night vitrine — gilt-edged display cases on deep emerald velvet, one sticky shopping bag */
+:root{
+  --velvet:#0d2420; --velvet-2:#123029; --case:#173a32; --gilt:#d8b56a; --gilt-soft:#b8995a;
+  --ivory:#f3ecdc; --muted:#a9b8ae; --line:rgba(216,181,106,.28); --ok:#8fd1a8;
+  --display:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --body:"Jost", "Futura", "Avenir Next", system-ui, sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--velvet);color:var(--ivory);font-family:var(--body);font-weight:300;font-size:16px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--velvet)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(13,36,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px}
+.mark{font-family:var(--display);font-size:1.25rem;letter-spacing:.02em}
+.mark i{color:var(--gilt)}
+.bagbtn{font:inherit;font-weight:500;letter-spacing:.12em;text-transform:uppercase;font-size:.75rem;color:var(--velvet);background:var(--gilt);border:0;border-radius:999px;padding:10px 18px;cursor:pointer}
+.bagbtn:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ivory);outline-offset:2px}
+
+.hero{padding-block:56px 36px;display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:end}
+.eyebrow{font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gilt)}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(2.4rem,6vw,4.6rem);line-height:1.02;margin:.3em 0 .4em;text-wrap:balance}
+.hero h1 em{color:var(--gilt)}
+.hero p{max-width:52ch;color:var(--muted);margin:0}
+.quote{border-left:1px solid var(--gilt);padding:6px 0 6px 22px}
+.quote blockquote{font-family:var(--display);font-style:italic;font-size:1.35rem;line-height:1.35;margin:0 0 10px;min-height:3.9em}
+.quote button{font:inherit;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gilt);background:none;border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;padding-block:8px 28px;border-top:1px solid var(--line);padding-top:24px}
+.chip{font:inherit;font-size:.82rem;letter-spacing:.08em;color:var(--ivory);background:transparent;border:1px solid var(--line);border-radius:999px;padding:7px 16px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ivory);color:var(--velvet);border-color:var(--ivory)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px;padding-bottom:60px}
+.card{background:var(--case);border:1px solid var(--line);display:flex;flex-direction:column;min-width:0}
+.show{aspect-ratio:4/3;max-width:100%;display:grid;place-items:center;position:relative;background:radial-gradient(ellipse at 50% 35%,rgba(243,236,220,.16),transparent 62%),linear-gradient(160deg,var(--velvet-2),var(--velvet));border-bottom:1px solid var(--line)}
+.show svg{width:70%;height:auto;filter:drop-shadow(0 14px 18px rgba(0,0,0,.45))}
+.show .tier{position:absolute;top:12px;left:12px;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gilt)}
+.show img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tools{display:flex;gap:8px;flex-wrap:wrap;padding:10px 18px 0}
+.tool{font:inherit;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gilt);background:none;border:1px solid var(--line);padding:5px 10px;cursor:pointer;text-decoration:none}
+.tool:hover{border-color:var(--gilt)}
+.info{padding:18px 18px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
+.brand{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.info h3{font-family:var(--display);font-weight:400;font-size:1.3rem;line-height:1.2;margin:0;text-wrap:balance}
+.info p{font-size:.88rem;color:var(--muted);margin:0}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:12px}
+.price{font-family:var(--display);font-size:1.15rem;color:var(--gilt);font-variant-numeric:tabular-nums}
+.price small{display:block;font-family:var(--body);font-size:.68rem;color:var(--muted);letter-spacing:.06em}
+.add{font:inherit;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;background:none;color:var(--ivory);border:1px solid var(--gilt);padding:8px 14px;cursor:pointer;white-space:nowrap}
+.add:hover{background:var(--gilt);color:var(--velvet)}
+.add.in{background:var(--gilt);color:var(--velvet)}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:20}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);background:var(--velvet-2);border-left:1px solid var(--line);z-index:21;overflow-y:auto;
+  padding:calc(24px + env(safe-area-inset-top,0px)) max(22px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) 22px;display:flex;flex-direction:column;gap:18px}
+.drawer h2{font-family:var(--display);font-weight:400;font-size:1.8rem;margin:0}
+.dhead{display:flex;justify-content:space-between;align-items:center}
+.x{font:inherit;background:none;border:1px solid var(--line);color:var(--ivory);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:1.1rem}
+.line{display:flex;justify-content:space-between;gap:12px;padding-block:10px;border-bottom:1px solid var(--line);font-size:.92rem}
+.line span:first-child{min-width:0}
+.line b{font-weight:400;color:var(--gilt);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rm{font:inherit;font-size:.72rem;color:var(--muted);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;margin-left:6px}
+.total{display:flex;justify-content:space-between;font-family:var(--display);font-size:1.3rem}
+.total b{color:var(--gilt);font-weight:400;font-variant-numeric:tabular-nums}
+.empty{color:var(--muted);font-size:.9rem}
+fieldset{border:1px solid var(--line);padding:14px 14px 16px;margin:0;display:grid;gap:10px}
+legend{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gilt);padding:0 6px}
+label{display:grid;gap:4px;font-size:.78rem;color:var(--muted)}
+input,select{font:inherit;font-size:.95rem;color:var(--ivory);background:var(--velvet);border:1px solid var(--line);padding:9px 10px;width:100%}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.calc{font-size:.9rem;color:var(--ivory)}
+.calc strong{color:var(--gilt);font-weight:400;font-family:var(--display);font-size:1.15rem}
+.order{font:inherit;font-weight:500;letter-spacing:.16em;text-transform:uppercase;font-size:.85rem;background:var(--gilt);color:var(--velvet);border:0;padding:14px;cursor:pointer}
+.order:disabled{opacity:.4;cursor:not-allowed}
+.note{font-size:.76rem;color:var(--muted);margin:0}
+.done{border:1px solid var(--gilt);padding:18px;display:grid;gap:8px}
+.done h3{font-family:var(--display);font-weight:400;font-size:1.4rem;margin:0;color:var(--gilt)}
+.done p{margin:0;font-size:.92rem}
+footer{border-top:1px solid var(--line);padding-block:26px;color:var(--muted);font-size:.8rem}
+
+@media (max-width:760px){.hero{grid-template-columns:1fr;padding-block:36px 24px;gap:26px}}
+@media (prefers-reduced-motion:no-preference){.card{transition:transform .25s ease}.card:hover{transform:translateY(-3px)}}
+</style>
+<style>html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="mark">Ponçik <i>Sepeti</i></div>
+  <button class="bagbtn" id="openBag" type="button">Sepetim · <span id="bagCount">0</span></button>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Kişisel hayal vitrini · Özlem Demirdağ</div>
+      <h1>Hak ettiğin her şey <em>burada</em> seni bekliyor.</h1>
+      <p>Beşli Reşat'tan Hermès Birkin'e, Patek Philippe'ten Graff pırlantasına kadar dünyanın en seçkin parçaları. Beğendiklerini sepete ekle, hedefini koy, her gün ne kadar yaklaştığını gör.</p>
+    </div>
+    <div class="quote">
+      <blockquote id="quote">Bir gün değil, birinci gün. Bugün başla.</blockquote>
+      <button type="button" id="nextQuote">Yeni söz</button>
+    </div>
+  </section>
+
+  <nav class="filters" id="filters" aria-label="Kategoriler"></nav>
+  <section class="grid" id="grid" aria-live="polite"></section>
+</main>
+
+<footer><div class="wrap">Fiyatlar bilgi amaçlı yaklaşık değerlerdir; marka, model ve döneme göre değişir. Bu sayfa bir motivasyon vitrinidir, gerçek satış yapmaz.</div></footer>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-label="Ponçik Sepeti">
+  <div class="dhead"><h2>Ponçik Sepeti</h2><button class="x" id="closeBag" type="button" aria-label="Kapat">×</button></div>
+  <div id="lines"></div>
+  <div class="total"><span>Toplam</span><b id="total">€0</b></div>
+
+  <fieldset>
+    <legend>Teslimat · Kargo</legend>
+    <label for="f-name">Ad Soyad<input id="f-name" value="Özlem Demirdağ"></label>
+    <label for="f-addr">Adres<input id="f-addr" value="Seyitömer Mah. Emrullahefendi Sk. No: 59 Budak Apt. 59/1"></label>
+    <div class="two">
+      <label for="f-dist">İlçe / Mahalle<input id="f-dist" value="Seyyid Ömer Mh."></label>
+      <label for="f-city">Şehir<input id="f-city" value="İstanbul"></label>
+    </div>
+    <div class="two">
+      <label for="f-zip">Posta kodu<input id="f-zip" value="34098" inputmode="numeric"></label>
+      <label for="f-country">Ülke<input id="f-country" value="Türkiye"></label>
+    </div>
+    <label for="f-tel">Telefon<input id="f-tel" value="0533 708 20 22" inputmode="tel"></label>
+    <label for="f-ship">Gönderim<select id="f-ship"><option>Kargo ile adrese teslim</option><option>Sigortalı özel kurye</option></select></label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Hedef hesaplayıcı</legend>
+    <div class="two">
+      <label for="f-date">Hedef tarihi<input id="f-date" type="date"></label>
+      <label for="f-rate">1 € kaç ₺?<input id="f-rate" type="number" step="0.1" min="1" value="50"></label>
+    </div>
+    <div class="calc" id="calc"></div>
+  </fieldset>
+
+  <button class="order" id="order" type="button">Hayal siparişini ver</button>
+  <p class="note">Sipariş gerçek değildir; ödeme alınmaz, kargo çıkmaz. Hedefini somutlaştırmak için bir sipariş özeti oluşturur.</p>
+  <div id="doneBox" hidden></div>
+</aside>
+
+<script>
+const TONE={4:"#efe9de",5:"#8a5a2b",6:"#1c1c1f",7:"#2a3f6b",8:"#4a3a2c",10:"#e9e4d8",11:"#d9a38a",12:"#efe2c0",9:"#23324f",14:"#efe9e2",16:"#1f7a55",17:"#f2c94c",18:"#cfd6dc",19:"#3a4f8c",20:"#d8b56a",21:"#8c2f3a"};
+function art(p){
+  const u="g"+p.id, t=TONE[p.id]||"#d8b56a";
+  const defs=`<defs><linearGradient id="${u}a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3c4"/><stop offset=".45" stop-color="#d8a945"/><stop offset="1" stop-color="#8a6420"/></linearGradient>
+  <linearGradient id="${u}b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${t}"/><stop offset="1" stop-color="${t}" stop-opacity=".72"/></linearGradient>
+  <radialGradient id="${u}c" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffffff"/><stop offset=".5" stop-color="${t}"/><stop offset="1" stop-color="#0b1a17"/></radialGradient></defs>`;
+  const G=`url(#${u}a)`,L=`url(#${u}b)`,R=`url(#${u}c)`;
+  let b="";
+  if(p.c==="gold"){
+    if(p.id===3){b=`<path d="M40 150 L70 90 H190 L220 150 Z" fill="${G}" stroke="#7a581b"/><path d="M70 90 H190 L178 104 H82 Z" fill="#fff3c4" opacity=".55"/><text x="130" y="132" text-anchor="middle" font-family="Georgia,serif" font-size="15" fill="#6b4c16">1000 g · 999.9</text>`}
+    else{const r=p.id===1?62:52;let dots="";for(let i=0;i<36;i++){const a=i*Math.PI/18;dots+=`<circle cx="${130+(r-6)*Math.cos(a)}" cy="${100+(r-6)*Math.sin(a)}" r="1.6" fill="#7a581b"/>`}
+      let pet="";for(let i=0;i<8;i++){pet+=`<ellipse cx="130" cy="${100-r*.42}" rx="6" ry="${r*.22}" fill="none" stroke="#7a581b" stroke-width="1.4" transform="rotate(${i*45} 130 100)"/>`}
+      b=`<circle cx="130" cy="100" r="${r}" fill="${G}" stroke="#7a581b" stroke-width="2"/><circle cx="130" cy="100" r="${r-12}" fill="none" stroke="#fff3c4" stroke-opacity=".6"/>${dots}${pet}<circle cx="130" cy="100" r="7" fill="#fff3c4"/>`}
+  }
+  if(p.c==="bag"){b=`<path d="M92 72 C92 30 168 30 168 72" fill="none" stroke="${t}" stroke-width="9" stroke-linecap="round"/><path d="M92 72 C92 30 168 30 168 72" fill="none" stroke="#000" stroke-opacity=".18" stroke-width="2"/>
+    <path d="M58 72 H202 L214 172 H46 Z" fill="${L}" stroke="#000" stroke-opacity=".25"/><path d="M58 72 H202 L196 118 H64 Z" fill="${t}" stroke="#000" stroke-opacity=".3"/><path d="M64 118 H196" stroke="#fff" stroke-opacity=".25"/>
+    <rect x="118" y="108" width="24" height="22" rx="3" fill="${G}" stroke="#7a581b"/><circle cx="130" cy="120" r="4" fill="#7a581b"/><path d="M50 160 H210" stroke="#fff" stroke-opacity=".12" stroke-dasharray="3 4"/>`}
+  if(p.c==="watch"){let ticks="";for(let i=0;i<12;i++)ticks+=`<rect x="128.5" y="62" width="3" height="${i%3?6:11}" fill="#3a2a10" transform="rotate(${i*30} 130 100)"/>`;
+    b=`<rect x="108" y="8" width="44" height="60" rx="6" fill="${p.id===10||p.id===11?G:L}" stroke="#000" stroke-opacity=".25"/><rect x="108" y="132" width="44" height="60" rx="6" fill="${p.id===10||p.id===11?G:L}" stroke="#000" stroke-opacity=".25"/>
+    ${p.id===11?`<path d="M130 50 L165 64 L180 100 L165 136 L130 150 L95 136 L80 100 L95 64 Z" fill="${G}" stroke="#7a581b"/>`:`<circle cx="130" cy="100" r="48" fill="${G}" stroke="#7a581b" stroke-width="2"/>`}
+    <circle cx="130" cy="100" r="38" fill="${p.id===9?"#23324f":p.id===10?"#f5f1e6":"#f3ecdc"}"/>${p.id===9?"":ticks}
+    ${p.id===9?`<circle cx="114" cy="92" r="8" fill="none" stroke="#d8b56a"/><circle cx="146" cy="92" r="8" fill="none" stroke="#d8b56a"/><circle cx="130" cy="116" r="9" fill="none" stroke="#d8b56a"/>`:""}
+    <path d="M130 100 V72" stroke="${p.id===9?"#d8b56a":"#1b1b1b"}" stroke-width="2.5"/><path d="M130 100 L150 110" stroke="${p.id===9?"#d8b56a":"#1b1b1b"}" stroke-width="3"/><rect x="178" y="94" width="8" height="12" rx="2" fill="${G}"/>`}
+  if(p.c==="jewel"){
+    if(p.id===13){b=`<ellipse cx="130" cy="130" rx="46" ry="40" fill="none" stroke="${G}" stroke-width="10"/><path d="M104 74 L118 56 H142 L156 74 L130 102 Z" fill="${R}" stroke="#fff" stroke-opacity=".8"/><path d="M104 74 H156 M118 56 L130 74 L142 56 M130 74 V102" stroke="#fff" stroke-opacity=".7"/><path d="M118 96 L130 108 L142 96" fill="${G}"/>`}
+    else if(p.id===15){let s="";for(let i=0;i<8;i++){const a=i*Math.PI/4;s+=`<circle cx="${130+70*Math.cos(a)}" cy="${105+34*Math.sin(a)}" r="4" fill="#fff" />`}b=`<ellipse cx="130" cy="105" rx="70" ry="34" fill="none" stroke="${G}" stroke-width="16"/><ellipse cx="130" cy="105" rx="70" ry="34" fill="none" stroke="#fff3c4" stroke-opacity=".5" stroke-width="2"/>${s}`}
+    else{let beads="";for(let i=0;i<=16;i++){const a=Math.PI*(.08+.84*i/16);beads+=`<circle cx="${130-88*Math.cos(a)}" cy="${30+70*Math.sin(a)}" r="${p.id===16?6:3.2}" fill="${p.id===16?R:G}"/>`}
+      const pend=p.id===17?`<path d="M130 110 L150 134 L130 160 L110 134 Z" fill="${R}"/><path d="M118 112 C126 96 140 98 146 108 L138 108 Z" fill="${G}"/>`:p.id===16?`<path d="M106 112 C120 150 140 150 154 112 C140 128 120 128 106 112Z" fill="${G}"/><circle cx="130" cy="140" r="12" fill="${R}"/>`:`<path d="M130 106 C142 118 142 118 130 130 C118 118 118 118 130 106Z M130 130 C142 142 142 142 130 154 C118 142 118 142 130 130Z" fill="${G}"/><path d="M130 112 L138 130 L130 148 L122 130 Z" fill="${t}"/>`;
+      b=beads+pend}
+  }
+  if(p.c==="shoe"){let sp="";if(p.id===18)for(let i=0;i<14;i++)sp+=`<circle cx="${70+i*9}" cy="${118-Math.sin(i/2)*10}" r="1.6" fill="#fff"/>`;
+    b=`<path d="M36 150 C70 150 96 138 124 104 C134 92 146 96 152 108 C166 132 196 138 220 140 L220 152 L36 158 Z" fill="${L}" stroke="#000" stroke-opacity=".3"/><path d="M196 152 L200 192 H208 L212 152 Z" fill="#7a1f2b"/><path d="M36 158 L220 152" stroke="#7a1f2b" stroke-width="4"/>${p.id===19?`<rect x="118" y="112" width="26" height="18" rx="3" fill="#e8f2ff" stroke="${G}" stroke-width="3"/>`:sp}`}
+  if(p.c==="scent"){b=`<rect x="76" y="70" width="108" height="114" rx="${p.id===20?54:10}" fill="${R}" fill-opacity=".85" stroke="${G}" stroke-width="3"/><rect x="86" y="116" width="88" height="62" rx="${p.id===20?30:6}" fill="${t}" opacity=".55"/>
+    <rect x="114" y="52" width="32" height="20" fill="${G}"/><path d="M106 52 C106 18 154 18 154 52 Z" fill="${p.id===20?G:"#1b1b1b"}"/><rect x="100" y="98" width="60" height="22" fill="#f3ecdc" opacity=".9"/><path d="M110 109 H150" stroke="#7a581b"/>`}
+  return `<svg viewBox="0 0 260 200" role="img" aria-label="${p.n} çizimi">${defs}${b}</svg>`;
+}
+const SITE={"Hermès":"https://www.hermes.com","Chanel":"https://www.chanel.com","Dior":"https://www.dior.com","Bottega Veneta":"https://www.bottegaveneta.com","Patek Philippe":"https://www.patek.com","Rolex":"https://www.rolex.com","Audemars Piguet":"https://www.audemarspiguet.com","Cartier":"https://www.cartier.com","Graff":"https://www.graff.com","Van Cleef & Arpels":"https://www.vancleefarpels.com","Bulgari":"https://www.bulgari.com","Tiffany & Co.":"https://www.tiffany.com","Christian Louboutin":"https://www.christianlouboutin.com","Manolo Blahnik":"https://www.manoloblahnik.com","Clive Christian":"https://www.clivechristian.com","Roja Parfums":"https://www.rojaparfums.com"};
+let photos={};try{photos=JSON.parse(localStorage.getItem("hv-photos")||"{}")}catch(e){}
+const savePhotos=()=>{try{localStorage.setItem("hv-photos",JSON.stringify(photos));return true}catch(e){return false}};
+const CATS=[["all","Tümü"],["gold","Altın"],["bag","Çanta"],["watch","Saat"],["jewel","Mücevher"],["shoe","Ayakkabı"],["scent","Parfüm"]];
+const P=[
+ {id:1,c:"gold",b:"Kuyumcu",n:"Beşli Reşat Altın",d:"Ziynet altınının en görkemlisi; düğünlerin ve yatırımın simgesi.",p:null,t:"Klasik"},
+ {id:2,c:"gold",b:"Kuyumcu",n:"Tam Reşat Altın",d:"Osmanlı motifli, yüksek ayar; her koleksiyonun temel taşı.",p:null,t:"Klasik"},
+ {id:3,c:"gold",b:"Kuyumcu",n:"1 kg Külçe Altın",d:"24 ayar, sertifikalı. Sessiz ama en güçlü servet.",p:null,t:"Yatırım"},
+ {id:4,c:"bag",b:"Hermès",n:"Birkin 25 Himalaya",d:"Nil timsahı derisi, beyaz altın ve pırlanta kilit. Çanta dünyasının zirvesi.",p:350000,t:"Zirve"},
+ {id:5,c:"bag",b:"Hermès",n:"Kelly 28 Sellier",d:"Keskin hatlı, el dikişi; zarafetin tanımı.",p:14000,t:"İkon"},
+ {id:6,c:"bag",b:"Chanel",n:"Classic Flap, Büyük",d:"Kapitone kuzu derisi, zincir askı, CC kilit.",p:11000,t:"İkon"},
+ {id:7,c:"bag",b:"Dior",n:"Lady Dior, Büyük",d:"Cannage dikiş deseni ve sallanan harf tılsımları.",p:7500,t:"İkon"},
+ {id:8,c:"bag",b:"Bottega Veneta",n:"Andiamo, Timsah Derisi",d:"Intrecciato örgü, logosuz lüks.",p:60000,t:"Nadir"},
+ {id:9,c:"watch",b:"Patek Philippe",n:"Grand Complications Perpetual Calendar",d:"Sonsuz takvim, el yapımı mekanizma; nesilden nesile.",p:140000,t:"Zirve"},
+ {id:10,c:"watch",b:"Rolex",n:"Cosmograph Daytona, Beyaz Altın",d:"Kronografların efsanesi, pırlanta kadranlı.",p:45000,t:"İkon"},
+ {id:11,c:"watch",b:"Audemars Piguet",n:"Royal Oak Rose Gold",d:"Sekizgen kasa, Grande Tapisserie kadran.",p:75000,t:"İkon"},
+ {id:12,c:"watch",b:"Cartier",n:"Panthère, Sarı Altın",d:"Kadın saatlerinin zamansız mücevheri.",p:32000,t:"Zarif"},
+ {id:13,c:"jewel",b:"Graff",n:"5 Karat Pırlanta Tektaş",d:"D renk, kusursuz berraklık. Işığı başka türlü kırar.",p:900000,t:"Zirve"},
+ {id:14,c:"jewel",b:"Van Cleef & Arpels",n:"Magic Alhambra Kolye",d:"Sedef ve sarı altın; şans getiren yonca.",p:22000,t:"İkon"},
+ {id:15,c:"jewel",b:"Cartier",n:"Love Bilezik, Pırlantalı",d:"Vidalı kilit, 18 ayar altın. Bağlılığın simgesi.",p:21000,t:"İkon"},
+ {id:16,c:"jewel",b:"Bulgari",n:"Serpenti High Jewellery Kolye",d:"Zümrüt ve pırlanta pullarla sarılan yılan.",p:250000,t:"Nadir"},
+ {id:17,c:"jewel",b:"Tiffany & Co.",n:"Schlumberger Bird on a Rock",d:"Sarı pırlantanın üzerinde duran altın kuş.",p:120000,t:"Nadir"},
+ {id:18,c:"shoe",b:"Christian Louboutin",n:"So Kate Strass",d:"Kristal işlemeli stiletto, imza kırmızı taban.",p:6000,t:"Işıltı"},
+ {id:19,c:"shoe",b:"Manolo Blahnik",n:"Hangisi Kristal Tokalı",d:"Saten ve kristal tokasıyla kırmızı halı klasiği.",p:1400,t:"Zarif"},
+ {id:20,c:"scent",b:"Clive Christian",n:"No. 1 Imperial Majesty",d:"Kristal şişe, altın yaka ve pırlanta; parfümün zirvesi.",p:12000,t:"Zirve"},
+ {id:21,c:"scent",b:"Roja Parfums",n:"Haute Luxe",d:"El yapımı şişede yoğun, sıcak bir koku.",p:3500,t:"Nadir"}
+];
+const Q=["Bir gün değil, birinci gün. Bugün başla.","Değerini bilen, değerli olanı bulur.","Küçük adımlar, büyük vitrinlere çıkar.","Hayal kurmak ücretsiz; çalışmak onu gerçeğe çevirir.","Sen ışıldarsan, taşıdığın her şey ışıldar.","Bugün biriktirdiğin her kuruş, yarınki seçimin.","Önce kendine yatırım yap; gerisi peşinden gelir.","Zarafet sabırla, servet disiplinle kurulur."];
+
+const fmt=v=>"€"+v.toLocaleString("tr-TR");
+let cat="all",bag=new Set(),qi=0;
+try{const s=JSON.parse(localStorage.getItem("hv-bag")||"[]");s.forEach(i=>bag.add(i))}catch(e){}
+const save=()=>{try{localStorage.setItem("hv-bag",JSON.stringify([...bag]))}catch(e){}};
+const $=id=>document.getElementById(id);
+
+$("filters").innerHTML=CATS.map(([k,l])=>`<button class="chip" type="button" data-k="${k}" aria-pressed="${k==="all"}">${l}</button>`).join("");
+$("filters").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;cat=b.dataset.k;
+  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c===b));renderGrid()});
+
+function renderGrid(){
+  $("grid").innerHTML=P.filter(p=>cat==="all"||p.c===cat).map(p=>`
+  <article class="card">
+    <div class="show">${photos[p.id]?`<img src="${photos[p.id]}" alt="${p.n}">`:art(p)}<span class="tier">${p.t}</span></div>
+    <div class="tools">
+      <label class="tool" for="ph-${p.id}">${photos[p.id]?"Fotoğrafı değiştir":"Kendi fotoğrafını ekle"}<input id="ph-${p.id}" type="file" accept="image/*" data-id="${p.id}" hidden></label>
+      ${photos[p.id]?`<button class="tool" type="button" data-del="${p.id}">Çizime dön</button>`:""}
+      ${SITE[p.b]?`<a class="tool" href="${SITE[p.b]}" target="_blank" rel="noopener">Resmî sitede gör</a>`:""}
+    </div>
+    <div class="info">
+      <div class="brand">${p.b}</div><h3>${p.n}</h3><p>${p.d}</p>
+      <div class="row">
+        <div class="price">${p.p?fmt(p.p):"Günün kuru"}<small>${p.p?"yaklaşık":"kuyumcu fiyatı"}</small></div>
+        <button class="add ${bag.has(p.id)?"in":""}" type="button" data-id="${p.id}">${bag.has(p.id)?"Sepette":"Sepete ekle"}</button>
+      </div>
+    </div>
+  </article>`).join("");
+}
+$("grid").addEventListener("click",e=>{const b=e.target.closest(".add");if(!b)return;const id=+b.dataset.id;
+  bag.has(id)?bag.delete(id):bag.add(id);save();renderGrid();renderBag()});
+
+function totalEur(){return [...bag].reduce((s,id)=>s+(P.find(p=>p.id===id).p||0),0)}
+function renderBag(){
+  $("bagCount").textContent=bag.size;
+  const items=[...bag].map(id=>P.find(p=>p.id===id));
+  $("lines").innerHTML=items.length?items.map(p=>`<div class="line"><span>${p.b} · ${p.n}<button class="rm" type="button" data-id="${p.id}">çıkar</button></span><b>${p.p?fmt(p.p):"Günün kuru"}</b></div>`).join("")
+    :'<p class="empty">Sepetin boş. Vitrinden gönlünü çalan bir parça seç.</p>';
+  $("total").textContent=fmt(totalEur())+(items.some(p=>!p.p)?" + altın":"");
+  $("order").disabled=!items.length;
+  renderCalc();
+}
+$("lines").addEventListener("click",e=>{const b=e.target.closest(".rm");if(!b)return;bag.delete(+b.dataset.id);save();renderGrid();renderBag()});
+
+function renderCalc(){
+  const t=totalEur(),rate=parseFloat($("f-rate").value)||0,d=$("f-date").value;
+  if(!t){$("calc").textContent="Sepete ürün ekleyince günlük birikim hedefin burada görünür.";return}
+  const days=Math.max(1,Math.ceil((new Date(d)-new Date())/864e5));
+  const tl=t*rate;
+  $("calc").innerHTML=`${days.toLocaleString("tr-TR")} gün içinde hedefe ulaşmak için günde <strong>₺${Math.ceil(tl/days).toLocaleString("tr-TR")}</strong> biriktirmelisin.<br><span class="note">Toplam ≈ ₺${Math.round(tl).toLocaleString("tr-TR")} · kuru kendin güncelleyebilirsin.</span>`;
+}
+const dd=new Date();dd.setFullYear(dd.getFullYear()+3);$("f-date").value=dd.toISOString().slice(0,10);
+$("f-date").addEventListener("input",renderCalc);$("f-rate").addEventListener("input",renderCalc);
+
+function openBag(){$("drawer").hidden=false;$("scrim").hidden=false;$("doneBox").hidden=true}
+function closeBag(){$("drawer").hidden=true;$("scrim").hidden=true}
+$("openBag").onclick=openBag;$("closeBag").onclick=closeBag;$("scrim").onclick=closeBag;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeBag()});
+
+$("order").onclick=()=>{
+  const no="HV-"+Date.now().toString().slice(-6);
+  const name=$("f-name").value,city=$("f-city").value;
+  $("doneBox").innerHTML=`<div class="done"><h3>Hayal siparişin oluşturuldu</h3>
+    <p>Sipariş no: <b>${no}</b></p>
+    <p>${name} adına, ${$("f-addr").value}, ${$("f-dist").value}, ${$("f-zip").value} ${city} / ${$("f-country").value} adresine, ${$("f-ship").value.toLowerCase()}.</p>
+    <p>Telefon: ${$("f-tel").value}</p>
+    <p style="font-family:var(--display);font-style:italic;color:var(--gilt)">${Q[Math.floor(Math.random()*Q.length)]}</p>
+    <p class="note">Bu bir motivasyon özetidir; gerçek sipariş verilmedi.</p></div>`;
+  $("doneBox").hidden=false;$("doneBox").scrollIntoView({behavior:"smooth",block:"nearest"});
+};
+
+$("nextQuote").onclick=()=>{qi=(qi+1)%Q.length;$("quote").textContent=Q[qi]};
+$("grid").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0];if(!f)return;const id=e.target.dataset.id;
+  const img=new Image(),r=new FileReader();r.onload=()=>{img.onload=()=>{const k=Math.min(1,900/Math.max(img.width,img.height));const c=document.createElement("canvas");
+    c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+    photos[id]=c.toDataURL("image/jpeg",.82);savePhotos();renderGrid()};img.src=r.result};r.readAsDataURL(f)});
+$("grid").addEventListener("click",e=>{const d=e.target.closest("[data-del]");if(!d)return;delete photos[d.dataset.del];savePhotos();renderGrid()});
+renderGrid();renderBag();
+</script>
+</body>
+</html>
